@@ -1,0 +1,22 @@
+{
+  "name": "nodes",
+  "version": "1.0.0",
+  "description": "Projeto-De-Sistema-Com-Cadastro-E-Autenticacao_Empresa-InovaTech",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon app.js"
+  },
+  "keywords": [],
+  "author": "Dev Jose Jhonata em colaboração com equipe - Projeto sem Fins lucrativos.",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "connect-mongodb-session": "^5.0.0",
+    "ejs": "^3.1.9",
+    "express": "^4.18.3",
+    "mongodb": "^6.5.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}
