@@ -1,4 +1,4 @@
-const getDb = require('../utils/database').getDb; // Importa a função para obter a conexão com o banco de dados
+const getDb = require('../util/database').getDb; // Importa a função para obter a conexão com o banco de dados
 
 class User {
   constructor(name, email, password) {
