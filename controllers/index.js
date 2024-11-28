@@ -39,3 +39,28 @@ exports.signup = async (req, res, next) => {
         res.redirect('/signup');
     }
 };
+
+//Metodo para realizar o Login do usuário no sistema
+exports.login = async (req, res, next) => {
+    const { email, password } = req.body;
+
+    try {
+        const user = await User.findByEmail(email); // Busca o usuário pelo e-mail
+
+        if (!user) {
+            console.error('Usuário não cadastrado.');
+            return res.redirect('/'); // Redireciona para a página de login
+        }
+
+        if (user.password !== password) {
+            console.error('Senha incorreta.');
+            return res.redirect('/'); // Redireciona para a página de login
+        }
+
+        console.log('Login realizado com sucesso:', user);
+        res.redirect('/members'); // Redireciona para a rota de membros
+    } catch (err) {
+        console.error('Erro ao realizar login:', err);
+        res.redirect('/'); // Redireciona para a página de login
+    }
+};

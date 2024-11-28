@@ -12,6 +12,12 @@ class User {
     const db = getDb();
     return await db.collection('users').insertOne(this); // Aguarda a inserção no banco
   }
+
+  // Método para buscar um usuário pelo e-mail
+  static async findByEmail(email) {
+    const db = getDb();
+    return await db.collection('users').findOne({ email }); // Busca o usuário pelo e-mail
+  }
 }
 
 module.exports = User;
