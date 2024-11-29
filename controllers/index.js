@@ -9,6 +9,14 @@ exports.showPageSignUp = (req, res, next) => {
     res.render('signUp');
 };
 
+// Função para verificar se o usuário está autenticado
+exports.isAuthenticated = (req, res, next) => {
+    if (!req.session.user) {
+        return res.redirect('/'); // Redireciona para a página de login se o usuário não estiver autenticado
+    }
+    next(); // Caso o usuário esteja autenticado, continua para a rota
+};
+
 exports.showMembersPage = (req, res) => {
     res.render('members');
 };
@@ -66,7 +74,12 @@ exports.login = async (req, res, next) => {
         }
 
         console.log('Login realizado com sucesso:', user);
-        res.redirect('/members'); // Redireciona para a rota de membros
+
+        // Armazena a informação do usuário na sessão
+        req.session.user = user;
+
+        // Redireciona para a rota de membros
+        res.redirect('/members');
     } catch (err) {
         console.error('Erro ao realizar login:', err);
         res.redirect('/'); // Redireciona para a página de login

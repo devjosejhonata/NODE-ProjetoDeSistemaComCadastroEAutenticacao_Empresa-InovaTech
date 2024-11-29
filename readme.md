@@ -11,3 +11,5 @@ Nesse projeto, estou trabalhando em um sistema que contém cadastro e tratamento
 - Arquitetura utilizada no projeto: MVC;
 
 - Estou utilizando a biblioteca "node.bcrypt.js" para gerar as hashs das senhas salvas no banco de dados, para as senhas criptografadas: npm i bcrypt ;
+
+- Estou utilizando a biblioteca express-session para gerencias as sessões de usuarios para autenticação, npm i express-session;
