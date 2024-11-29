@@ -1,3 +1,4 @@
+const bcrypt = require('bcrypt'); // Importa o bcrypt
 const User = require('../models/user'); // Importa o modelo User
 
 exports.showIndex = (req, res, next) => {
@@ -16,14 +17,17 @@ exports.get404Page = (req, res, next) => {
     res.status(404).render('404');
 };
 
-// Novo controlador para processar o cadastro
+// Metodo para cadastrar usuario
 exports.signup = async (req, res, next) => {
     const { username, email, password } = req.body;
 
-    // Cria uma instância do modelo User
-    const user = new User(username, email, password);
-
     try {
+        // Gera o hash da senha usando bcrypt
+        const hashedPassword = await bcrypt.hash(password, 10); // Sal com fator de custo 10
+
+        // Cria uma instância do modelo User com a senha criptografada
+        const user = new User(username, email, hashedPassword);
+
         // Salva o usuário no banco de dados
         await user.save();
 
@@ -45,14 +49,18 @@ exports.login = async (req, res, next) => {
     const { email, password } = req.body;
 
     try {
-        const user = await User.findByEmail(email); // Busca o usuário pelo e-mail
+        // Busca o usuário pelo e-mail
+        const user = await User.findByEmail(email);
 
         if (!user) {
             console.error('Usuário não cadastrado.');
             return res.redirect('/'); // Redireciona para a página de login
         }
 
-        if (user.password !== password) {
+        // Compara a senha digitada com o hash armazenado
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+
+        if (!isPasswordValid) {
             console.error('Senha incorreta.');
             return res.redirect('/'); // Redireciona para a página de login
         }
@@ -64,3 +72,4 @@ exports.login = async (req, res, next) => {
         res.redirect('/'); // Redireciona para a página de login
     }
 };
+

@@ -9,3 +9,5 @@ Nesse projeto, estou trabalhando em um sistema que contém cadastro e tratamento
 - Subir o servidor atraves de npm run dev, sera executado na porta 3000.
 
 - Arquitetura utilizada no projeto: MVC;
+
+- Estou utilizando a biblioteca "node.bcrypt.js" para gerar as hashs das senhas salvas no banco de dados, para as senhas criptografadas: npm i bcrypt ;
