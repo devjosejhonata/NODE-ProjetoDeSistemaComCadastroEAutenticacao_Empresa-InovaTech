@@ -13,6 +13,9 @@ router.get('/signup', controller.showPageSignUp);
 // Rota de membros (protegida por autenticação)
 router.get('/members', controller.isAuthenticated, controller.showMembersPage);
 
+// Rota de logout
+router.get('/logout', controller.logout);
+
 // Rota para processar o formulário de cadastro
 router.post('/signup', controller.signup);
 

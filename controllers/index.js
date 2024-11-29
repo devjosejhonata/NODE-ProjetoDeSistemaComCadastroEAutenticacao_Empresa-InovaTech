@@ -86,3 +86,17 @@ exports.login = async (req, res, next) => {
     }
 };
 
+// Função para fazer o logout
+exports.logout = (req, res, next) => {
+    req.session.destroy((err) => {
+        if (err) {
+            return console.error('Erro ao destruir a sessão:', err);
+        }
+
+        // Remover o cookie explicitamente
+        res.clearCookie('connect.sid'); // 'connect.sid' é o nome padrão do cookie de sessão, pode variar dependendo da configuração
+
+        res.redirect('/'); // Redireciona para a página de login após o logout
+    });
+};
+
