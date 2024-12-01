@@ -11,7 +11,7 @@ exports.showPageSignUp = (req, res, next) => {
 
 // Função para verificar se o usuário está autenticado
 exports.isAuthenticated = (req, res, next) => {
-    if (!req.session.user) {
+    if (!req.isAuthenticated()) {
         return res.redirect('/'); // Redireciona para a página de login se o usuário não estiver autenticado
     }
     next(); // Caso o usuário esteja autenticado, continua para a rota
@@ -52,7 +52,7 @@ exports.signup = async (req, res, next) => {
     }
 };
 
-//Metodo para realizar o Login do usuário no sistema
+// Método para realizar o login do usuário no sistema (via email e senha)
 exports.login = async (req, res, next) => {
     const { email, password } = req.body;
 
@@ -75,11 +75,16 @@ exports.login = async (req, res, next) => {
 
         console.log('Login realizado com sucesso:', user);
 
-        // Armazena a informação do usuário na sessão
-        req.session.user = user;
+        // Armazena a informação do usuário na sessão usando o Passport
+        req.login(user, (err) => { // Usando req.login do Passport para iniciar a sessão
+            if (err) {
+                console.error('Erro ao autenticar com senha:', err);
+                return res.redirect('/'); // Em caso de erro, redireciona para o login
+            }
+            // Redireciona para a rota de membros após login bem-sucedido
+            res.redirect('/members');
+        });
 
-        // Redireciona para a rota de membros
-        res.redirect('/members');
     } catch (err) {
         console.error('Erro ao realizar login:', err);
         res.redirect('/'); // Redireciona para a página de login
@@ -88,7 +93,7 @@ exports.login = async (req, res, next) => {
 
 // Função para fazer o logout
 exports.logout = (req, res, next) => {
-    req.session.destroy((err) => {
+    req.logout((err) => {
         if (err) {
             return console.error('Erro ao destruir a sessão:', err);
         }
@@ -99,4 +104,3 @@ exports.logout = (req, res, next) => {
         res.redirect('/'); // Redireciona para a página de login após o logout
     });
 };
-

@@ -13,3 +13,9 @@ Nesse projeto, estou trabalhando em um sistema que contém cadastro e tratamento
 - Estou utilizando a biblioteca "node.bcrypt.js" para gerar as hashs das senhas salvas no banco de dados, para as senhas criptografadas: npm i bcrypt ;
 
 - Estou utilizando a biblioteca express-session para gerencias as sessões de usuarios para autenticação, npm i express-session;
+
+- Estou utilizando o OAuth 2.0 para realizar a autenticação para fazer a integração do sistema com conta do Google ou GitHub, permitindo o login no sistema através de conta do google ou github;
+
+- Utilizando o Passport-github2 para login com o github, npm i passport passport-github2;
+
+- Utilizando a biblioteca dotenv para armazenar arquivos sensíveis da aplicação com ., npm i dotenv;
