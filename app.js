@@ -7,25 +7,31 @@ require('dotenv').config(); // Carrega as variáveis de ambiente
 const passport = require('./auth'); // Configuração do Passport.js
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000; // Usando variável de ambiente para a porta
 
 // Configuração do armazenamento de sessões no MongoDB
 const sessionStore = new MongoDBStore({
-    uri: 'mongodb://localhost:27017/', // Altere a URI conforme necessário
-    databaseName: 'test', // Nome do banco de dados
+    uri: process.env.MONGO_URI, // A URI do MongoDB no .env
+    databaseName: process.env.DB_NAME || 'test', // Nome do banco de dados
     collection: 'sessions' // Nome da coleção onde as sessões serão armazenadas
+});
+
+// Tratamento de erros do MongoDB Store
+sessionStore.on('error', (error) => {
+    console.error('Erro no MongoDB Store:', error);
 });
 
 // Middleware de sessão
 app.use(
     session({
-        secret: 'segredo', // Use uma chave secreta forte para proteger as sessões
+        secret: process.env.SESSION_SECRET || 'segredo', // Usando chave secreta no .env
         resave: false,
         saveUninitialized: false,
         store: sessionStore, // Usando o MongoDBStore
         cookie: {
             httpOnly: true,
-            secure: false // Defina como true se estiver usando HTTPS
+            secure: process.env.NODE_ENV === 'production', // Apenas envia cookies em HTTPS em produção
+            maxAge: 1000 * 60 * 60 * 24, // Definindo expiração do cookie de sessão
         }
     })
 );

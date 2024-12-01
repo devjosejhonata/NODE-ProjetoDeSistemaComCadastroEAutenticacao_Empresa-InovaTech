@@ -1,106 +1,60 @@
 const bcrypt = require('bcrypt'); // Importa o bcrypt
 const User = require('../models/user'); // Importa o modelo User
 
-exports.showIndex = (req, res, next) => {
-    res.render('index');
-};
-
-exports.showPageSignUp = (req, res, next) => {
-    res.render('signUp');
-};
+// Funções de renderização
+exports.showIndex = (req, res) => res.render('index');
+exports.showPageSignUp = (req, res) => res.render('signUp');
+exports.showMembersPage = (req, res) => res.render('members');
+exports.get404Page = (req, res) => res.status(404).render('404');
 
 // Função para verificar se o usuário está autenticado
 exports.isAuthenticated = (req, res, next) => {
-    if (!req.isAuthenticated()) {
-        return res.redirect('/'); // Redireciona para a página de login se o usuário não estiver autenticado
-    }
-    next(); // Caso o usuário esteja autenticado, continua para a rota
+    if (!req.isAuthenticated()) return res.redirect('/'); // Redireciona para o login se não autenticado
+    next(); // Usuário autenticado, segue para a rota
 };
 
-exports.showMembersPage = (req, res) => {
-    res.render('members');
-};
-
-exports.get404Page = (req, res, next) => {
-    res.status(404).render('404');
-};
-
-// Metodo para cadastrar usuario
-exports.signup = async (req, res, next) => {
+// Método para cadastrar usuário
+exports.signup = async (req, res) => {
     const { username, email, password } = req.body;
-
     try {
-        // Gera o hash da senha usando bcrypt
-        const hashedPassword = await bcrypt.hash(password, 10); // Sal com fator de custo 10
-
-        // Cria uma instância do modelo User com a senha criptografada
+        const hashedPassword = await bcrypt.hash(password, 10); // Criptografa a senha
         const user = new User(username, email, hashedPassword);
-
-        // Salva o usuário no banco de dados
         await user.save();
-
         console.log('Usuário cadastrado com sucesso:', { username, email });
-
-        // Redireciona para a página de login após o sucesso
-        res.redirect('/');
+        res.redirect('/'); // Redireciona para a página de login
     } catch (err) {
-        // Exibe o erro no console
         console.error('Erro ao cadastrar o usuário:', err);
-
-        // Redireciona/recarrega a página de cadastro
-        res.redirect('/signup');
+        res.redirect('/signup'); // Redireciona para a página de cadastro
     }
 };
 
-// Método para realizar o login do usuário no sistema (via email e senha)
-exports.login = async (req, res, next) => {
+// Método para realizar o login do usuário (via email e senha)
+exports.login = async (req, res) => {
     const { email, password } = req.body;
-
     try {
-        // Busca o usuário pelo e-mail
         const user = await User.findByEmail(email);
+        if (!user) return res.redirect('/'); // Redireciona para o login se não encontrado
 
-        if (!user) {
-            console.error('Usuário não cadastrado.');
-            return res.redirect('/'); // Redireciona para a página de login
-        }
-
-        // Compara a senha digitada com o hash armazenado
         const isPasswordValid = await bcrypt.compare(password, user.password);
+        if (!isPasswordValid) return res.redirect('/'); // Redireciona para o login se a senha for inválida
 
-        if (!isPasswordValid) {
-            console.error('Senha incorreta.');
-            return res.redirect('/'); // Redireciona para a página de login
-        }
+        console.log('Login realizado com sucesso:', user); // Exibe os dados do usuário no terminal
 
-        console.log('Login realizado com sucesso:', user);
-
-        // Armazena a informação do usuário na sessão usando o Passport
-        req.login(user, (err) => { // Usando req.login do Passport para iniciar a sessão
-            if (err) {
-                console.error('Erro ao autenticar com senha:', err);
-                return res.redirect('/'); // Em caso de erro, redireciona para o login
-            }
-            // Redireciona para a rota de membros após login bem-sucedido
-            res.redirect('/members');
+        req.login(user, (err) => { // Usando req.login do Passport
+            if (err) return res.redirect('/'); // Em caso de erro, redireciona para o login
+            res.redirect('/members'); // Redireciona para a página de membros após login
         });
-
     } catch (err) {
         console.error('Erro ao realizar login:', err);
-        res.redirect('/'); // Redireciona para a página de login
+        res.redirect('/'); // Redireciona para a página de login em caso de erro
     }
 };
 
 // Função para fazer o logout
-exports.logout = (req, res, next) => {
+exports.logout = (req, res) => {
     req.logout((err) => {
-        if (err) {
-            return console.error('Erro ao destruir a sessão:', err);
-        }
-
-        // Remover o cookie explicitamente
-        res.clearCookie('connect.sid'); // 'connect.sid' é o nome padrão do cookie de sessão, pode variar dependendo da configuração
-
+        if (err) return console.error('Erro ao destruir a sessão:', err);
+        res.clearCookie('connect.sid'); // Limpa o cookie de sessão
         res.redirect('/'); // Redireciona para a página de login após o logout
     });
 };

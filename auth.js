@@ -3,9 +3,7 @@ const GitHubStrategy = require('passport-github2').Strategy;
 const User = require('./models/user'); // Modelo de usuário para lidar com dados no MongoDB
 
 // Serialização e desserialização de usuários
-passport.serializeUser((user, done) => {
-    done(null, user._id); // Armazenando o ID do usuário na sessão
-});
+passport.serializeUser((user, done) => done(null, user._id)); // Armazenando o ID do usuário na sessão
 
 passport.deserializeUser(async (id, done) => {
     try {
@@ -16,32 +14,33 @@ passport.deserializeUser(async (id, done) => {
     }
 });
 
-// Configurando a estratégia do GitHub
+// Configuração da estratégia do GitHub
 passport.use(
     new GitHubStrategy(
         {
             clientID: process.env.GITHUB_CLIENT_ID,
             clientSecret: process.env.GITHUB_CLIENT_SECRET,
-            callbackURL: process.env.GITHUB_CALLBACK_URL
+            callbackURL: process.env.GITHUB_CALLBACK_URL,
         },
         async (accessToken, refreshToken, profile, done) => {
             try {
-                // Verificar se o usuário já existe no banco de dados usando o GitHub ID
+                // Verifica se o usuário já existe pelo GitHub ID
                 let user = await User.findOne({ githubId: profile.id });
 
                 if (!user) {
-                    // Se o usuário não existir, cria um novo usuário
+                    // Cria um novo usuário se não existir
                     user = new User({
                         username: profile.username,
                         email: profile.emails ? profile.emails[0].value : null,
-                        githubId: profile.id
+                        githubId: profile.id,
                     });
-                    await user.save(); // Salva o usuário no banco de dados
+
+                    await user.save(); // Salva o novo usuário no banco de dados
                 }
 
-                done(null, user); // Chama o done() para indicar que a autenticação foi bem-sucedida
+                done(null, user); // Autenticação bem-sucedida
             } catch (err) {
-                done(err); // Caso haja erro, passa para a próxima função
+                done(err); // Caso haja erro, repassa para o next middleware
             }
         }
     )

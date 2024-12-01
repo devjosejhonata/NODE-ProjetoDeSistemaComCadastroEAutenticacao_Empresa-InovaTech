@@ -10,21 +10,16 @@ router.use(bodyParser.urlencoded({ extended: true }));
 router.get('/', controller.showIndex);
 
 // Rotas de autenticação com GitHub
-router.get(
-    '/auth/github',
+router.get('/auth/github',
     passport.authenticate('github', { scope: ['user:email'] }) // Middleware do Passport para autenticação
 );
 
-router.get(
-    '/auth/github/callback',
+router.get('/auth/github/callback',
     passport.authenticate('github', {
         failureRedirect: '/', // Redireciona para a página inicial em caso de falha
         failureMessage: 'Falha ao autenticar com o GitHub' // Mensagem de erro
     }),
-    (req, res) => {
-        // Redireciona para a página de membros em caso de sucesso
-        res.redirect('/members');
-    }
+    (req, res) => res.redirect('/members') // Redireciona para a página de membros em caso de sucesso
 );
 
 // Rota para a página de cadastro
