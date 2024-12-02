@@ -1,23 +1,61 @@
-: PROJETO EM FASE DE DESENVOLVIMENTO :
+: Projeto em Colaboração :
 
-Nesse projeto, estou trabalhando em um sistema que contém cadastro e tratamento de dados de usuários para uma empresa. Projeto sendo desenvolvido em colaboração com uma equipe de desenvolvimento, onde uma parte do código já foi fornecida pronta e eu fiquei responsável por desenvolver a minha parte implementando algumas funcionalidades. Fiquei responsável por programar a parte de cadastro do usuário para acessar o sistema, pegando nome, email, senha, guardar as informações no banco de dados, programar o login no sistema, implementar a autenticação. Também, fiquei responsável por implementar a proteção de rotas na aplicação, para somente quem é membro do sistema conseguir acessar a rota de membros, e criar a autenticação com o OAauth para o GitHub.
+Este projeto é um sistema de cadastro e autenticação de usuários sendo desenvolvido para uma empresa de tecnologia. Trabalhando em colaboração com uma equipe de desenvolvimento, fui responsável por implementar funcionalidades específicas.
 
-- Tecnologias empregadas no Projeto: Node, Javascript, Docker, MongoDB, Express, ejs, body-parser. 
+# Minhas Responsabilidades no Projeto
+- Implementar o cadastro de usuários (nome, e-mail e senha) com armazenamento seguro no banco de dados.
+- Desenvolver o login e autenticação de usuários utilizando sessões.
+- Implementar criptografia das senhas para acesso e armazenagem de forma segura.
+- Implementar proteção de rotas para que apenas usuários autenticados acessem a rota de membros.
+- Implementar acesso ao sistema através de conta do Google ou Github.
+- Criar integração de login via OAuth para GitHub e Google.
 
-- Estou executando o MongoDB através do Docker. 
+# Tecnologias Utilizadas
+- Node.js: Para execução do JavaScript no backend.
+- JavaScript: Linguagem de programação principal do projeto.
+- Docker: Utilizado para execução do MongoDB.
+- MongoDB: Banco de dados para armazenar informações dos usuários.
+- Express: Framework para criação de rotas e middleware.
+- EJS: Template engine para renderizar páginas dinâmicas.
+- Body-parser: Middleware para lidar com requisições no formato JSON ou URL-encoded.
 
-- Subir o servidor atraves de npm run dev, sera executado na porta 3000.
+# Principais Bibliotecas e Dependências
+- bcrypt: Para criptografar senhas antes de armazená-las no banco de dados.
+- Instalação: npm i bcrypt
+- express-session: Para gerenciar sessões de usuários e autenticação.
+- Instalação: npm i express-session
+- dotenv: Para gerenciar variáveis de ambiente sensíveis, como chaves de API.
+- Instalação: npm i dotenv
+- passport: Middleware de autenticação para integração com GitHub e Google.
+- Instalação: npm i passport
+- passport-github2: Estratégia para autenticação via GitHub.
+- Instalação: npm i passport-github2
+- passport-google-oauth20: Estratégia para autenticação via Google.
+- Instalação: npm i passport-google-oauth20
 
-- Arquitetura utilizada no projeto: MVC;
+# Arquitetura
+O projeto segue o padrão de arquitetura MVC (Model-View-Controller), organizando o código em:
+- Models: Manipulação de dados e integração com o banco de dados.
+- Views: Interfaces renderizadas para o usuário.
+- Controllers: Lógica de negócio e intermediação entre rotas e modelos.
 
-- Estou utilizando a biblioteca "node.bcrypt.js" para gerar as hashs das senhas salvas no banco de dados, para as senhas criptografadas: npm i bcrypt ;
+# Execução
+Pré-requisitos:
+- Docker instalado para rodar o MongoDB.
+- Node.js e npm instalados.
 
-- Estou utilizando a biblioteca express-session para gerencias as sessões de usuarios para autenticação, npm i express-session;
+Passos para rodar o projeto:
+- Certifique-se de que o MongoDB está em execução pelo Docker.
+- Execute npm install para instalar as dependências.
+- Use o comando npm run dev para iniciar o servidor.
 
-- Estou utilizando o OAuth 2.0 para realizar a autenticação para fazer a integração do sistema com conta do Google ou GitHub, permitindo o login no sistema através de conta do google ou github;
+Porta do servidor:
+- O servidor estará disponível em http://localhost:3000.
 
-- Utilizando o Passport-github2 para login com o github, npm i passport passport-github2;
+# Documentação do Projeto
+O projeto inclui documentação detalhada para auxiliar na compreensão e manutenção do sistema.
+- Cada pasta principal contém um arquivo README.md com a explicação sobre: Objetivo e estrutura da pasta; Funções e métodos implementados; Interações com outras partes do sistema.
+- A documentação descreve rotas, fluxos e dependências de maneira objetiva, tornando mais simples para novos desenvolvedores entenderem o funcionamento do projeto.
 
-- Utilizando a biblioteca dotenv para armazenar arquivos sensíveis da aplicação com ., npm i dotenv;
-
-- Dependências instaladas para integrar o login com o Google: npm install passport-google-oauth20
+# Contribuições da Equipe
+Este projeto é desenvolvido em colaboração. Algumas partes do código foram fornecidas previamente, e eu implementei as funcionalidades descritas acima e realizei algumas melhorias no que foi fornecido previamente.
