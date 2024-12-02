@@ -25,23 +25,32 @@ passport.use(
         },
         async (accessToken, refreshToken, profile, done) => {
             try {
+                // Captura o email, verificando se está disponível
+                const email = profile.emails && profile.emails.length > 0
+                    ? profile.emails[0].value
+                    : null;
+
                 // Verifica se o usuário já existe pelo GitHub ID
                 let user = await User.findOne({ githubId: profile.id });
 
                 if (!user) {
                     // Cria um novo usuário se não existir
-                    user = new User({
-                        username: profile.username,
-                        email: profile.emails ? profile.emails[0].value : null,
-                        githubId: profile.id,
-                    });
+                    user = new User(
+                        profile.username || 'Usuário Sem Nome',
+                        email,
+                        null, // Sem senha, pois é autenticação via GitHub
+                        profile.id // GitHub ID
+                    );
 
                     await user.save(); // Salva o novo usuário no banco de dados
                 }
 
+                console.log(
+                    `Login com GitHub realizado com sucesso: Nome: ${user.username}, Email: ${user.email || 'Não disponível'}`
+                );
                 done(null, user); // Autenticação bem-sucedida
             } catch (err) {
-                done(err); // Caso haja erro, repassa para o next middleware
+                done(err); // Caso haja erro, repassa para o próximo middleware
             }
         }
     )
@@ -56,27 +65,30 @@ passport.use(
             callbackURL: process.env.GOOGLE_CALLBACK_URL,
         },
         async (accessToken, refreshToken, profile, done) => {
-            try {
-                // Verifica se o usuário já existe pelo Google ID
-                let user = await User.findOne({ googleId: profile.id });
+            const name = profile.displayName || `${profile.name.givenName} ${profile.name.familyName}`;
+            const email = profile.emails && profile.emails.length > 0 ? profile.emails[0].value : 'Email não disponível';
 
-                if (!user) {
-                    // Cria um novo usuário se não existir
-                    user = new User({
-                        username: profile.displayName,
-                        email: profile.emails ? profile.emails[0].value : null,
-                        googleId: profile.id,
-                    });
+            // Exibe os dados no console
+            console.log(`Login com Google realizado com sucesso: Nome: ${name}, Email: ${email}`);
 
-                    await user.save(); // Salva o novo usuário no banco de dados
-                }
+            // Encontra ou cria o usuário com o Google ID
+            let user = await User.findOne({ googleId: profile.id });
 
-                done(null, user); // Autenticação bem-sucedida
-            } catch (err) {
-                done(err); // Caso haja erro, repassa para o next middleware
+            if (!user) {
+                // Cria um novo usuário se não existir
+                user = new User({
+                    username: name,
+                    email: email,
+                    googleId: profile.id,
+                });
+
+                await user.save(); // Salva o novo usuário no banco de dados
             }
+
+            done(null, user); // Autenticação bem-sucedida
         }
     )
 );
+
 
 module.exports = passport;

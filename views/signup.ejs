@@ -16,16 +16,22 @@
 
     <main>
         <h1>Crie sua conta</h1>
-        <h2>Faça seu cadastro</h2>
+        <h2>"Faça seu cadastro para acesso ao sistema!"</h2>
+
+        <% if (error) { %>
+            <div class="error-message">
+                <p><%= error === 'email-exists' ? 'O email já está cadastrado!' : 'Ocorreu um erro, tente novamente.' %></p>
+            </div>
+        <% } %>
 
         <form class="signup" action="/signup" method="POST">
-            <label for="name">Nome</label>
+            <label for="name">Nome:</label>
             <input type="text" id="name" name="username" required>
             
-            <label for="email">Email</label>
+            <label for="email">Email:</label>
             <input type="email" id="email" name="email" required>
         
-            <label for="password">Senha</label>
+            <label for="password">Senha:</label>
             <input type="password" id="password" name="password" required>
         
             <div class="login-btn-container">

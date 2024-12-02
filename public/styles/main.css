@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 :root {
-    --background-color: #01080E;
+    --background-color: #003869;
     --verde-destaque: #81FE88;
     --verde-pastel: #BFFFC3;
     --verde-petroleo: #132E35;
@@ -17,13 +17,16 @@
 
 body {
     font-family: var(--font-family);
-    background-color: var(--background-color);
+    background-image: url('/assets/imgfundosistema.jpg');
+    background-size: cover;  /* Faz a imagem cobrir toda a tela */
+    background-position: center;  /* Centraliza a imagem */
+    background-repeat: no-repeat;  /* Evita a repetição da imagem */
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: row;
     height: 100vh;
-    gap: 1rem;
+    margin: 0;  /* Remove o espaçamento padrão */
 }
 
 main {
@@ -32,13 +35,19 @@ main {
     overflow: hidden;
     flex-direction: column;
     width: 30rem;
-    height: 42.53rem;
+    height: 45.53rem;
+    
+    border-top-right-radius: 2.0rem; /* Arredondar canto direito superior */
+    border-bottom-right-radius: 2.0rem; /* Arredondar canto direito inferior */
 }
 
 .logo {
     margin-top: 0.45rem;
-    height: 45rem;
+    height: 48rem;
     width: 40.03rem;
+  
+    border-top-left-radius: 2.0rem; /* Arredondar canto esquerdo superior */
+    border-bottom-left-radius: 2.0rem; /* Arredondar canto esquerdo inferior */
 }
 
 .error-message {
@@ -47,10 +56,11 @@ main {
 
 h1 {
     font-size: 2rem;
-    margin-bottom: 1.25rem; 
+    margin-bottom: 1.25rem;
     font-weight: 600;
     color: var(--offwhite);
     line-height: 2.93rem;
+    text-align: center;
 }
 
 h2 {
@@ -58,7 +68,8 @@ h2 {
     font-weight: 400;
     line-height: 2rem;
     color: var(--offwhite);
-    margin-bottom: 0.625rem; 
+    margin-bottom: 0.625rem;
+    text-align: center;
 }
 
 .login-form, .signup {
@@ -77,12 +88,12 @@ label {
 
 input {
     width: 100%;
-    margin-bottom: 1rem; 
+    margin-bottom: 1rem;
     box-sizing: border-box;
     border: 0.0625rem solid #ccc;
     background-color: var(--cinza-medio);
     font-size: 1rem;
-    border-radius: 0.25rem; 
+    border-radius: 0.25rem;
     padding: 0.7rem;
 }
 
@@ -111,7 +122,7 @@ button:hover {
 .alternate-accounts {
     width: 100%;
     text-align: center;
-    border-bottom: 0.0625rem solid var(--offwhite); 
+    border-bottom: 0.0625rem solid var(--offwhite);
     line-height: 0.1em;
     margin-top: 1rem;
     color: var(--offwhite);
@@ -162,7 +173,7 @@ button:hover {
     align-items: center;
     flex-direction: column;
     gap: 0.2rem;
-    margin-top: 3rem;
+    margin-top: 1rem;
     font-weight: 400;
 }
 
@@ -177,7 +188,6 @@ button:hover {
     color: var(--verde-destaque);
     font-size: 1.2rem;
     line-height: 2rem;
-
 }
 
 .page-not-found {
@@ -201,7 +211,7 @@ button:hover {
     color: var(--offwhite);
 }
 
-.page-not-found a:hover{
+.page-not-found a:hover {
     color: var(--verde-pastel);
     text-decoration: underline;
 }
@@ -219,7 +229,7 @@ button:hover {
     border-radius: 0.3rem;
     width: 6.5rem;
     height: 1.6rem;
-    font-weight: 400; 
+    font-weight: 400;
     font-size: 1rem;
     line-height: 1.6rem;
     text-align: center;
@@ -230,6 +240,16 @@ button:hover {
     color: red;
     margin-top: -.7rem;
     margin-bottom: .5rem;
+}
+
+.error-message {
+    color: #ff4d4d;
+    background-color: #ffe6e6;
+    border: 1px solid #ff4d4d;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 15px;
+    text-align: center;
 }
 
 @media (max-width: 1200px) {
@@ -255,20 +275,20 @@ button:hover {
         margin-top: -3rem;
         gap: 2rem;
     }
-    
+
     .social-media-details {
         display: flex;
         justify-content: center;
         align-items: center;
         flex-direction: column;
     }
-    
+
     .social-media-icon {
         height: 3rem;
         width: 3rem;
         margin-top: 5rem;
     }
-    
+
     .social-media-details a p {
         color: var(--offwhite);
         font-size: 1.5rem;
