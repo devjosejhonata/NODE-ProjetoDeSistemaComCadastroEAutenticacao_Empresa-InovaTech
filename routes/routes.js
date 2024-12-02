@@ -22,6 +22,19 @@ router.get('/auth/github/callback',
     (req, res) => res.redirect('/members') // Redireciona para a página de membros em caso de sucesso
 );
 
+// Rotas de autenticação com o Google
+router.get('/auth/google',
+    passport.authenticate('google', { scope: ['profile', 'email'] }) // Middleware do Passport para autenticação com Google
+);
+
+router.get('/auth/google/callback',
+    passport.authenticate('google', {
+        failureRedirect: '/', // Redireciona para a página inicial em caso de falha
+        failureMessage: 'Falha ao autenticar com o Google' // Mensagem de erro
+    }),
+    (req, res) => res.redirect('/members') // Redireciona para a página de membros em caso de sucesso
+);
+
 // Rota para a página de cadastro
 router.get('/signup', controller.showPageSignUp);
 

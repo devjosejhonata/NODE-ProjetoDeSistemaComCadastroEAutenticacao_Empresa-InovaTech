@@ -19,3 +19,5 @@ Nesse projeto, estou trabalhando em um sistema que contém cadastro e tratamento
 - Utilizando o Passport-github2 para login com o github, npm i passport passport-github2;
 
 - Utilizando a biblioteca dotenv para armazenar arquivos sensíveis da aplicação com ., npm i dotenv;
+
+- Dependências instaladas para integrar o login com o Google: npm install passport-google-oauth20
