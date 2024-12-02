@@ -1,0 +1,1 @@
+Pasta contendo os arquivos com tamplates do projeto, arquivos html.
