@@ -59,3 +59,9 @@ O projeto inclui documentação detalhada para auxiliar na compreensão e manute
 
 # Contribuições da Equipe
 Este projeto é desenvolvido em colaboração. Algumas partes do código foram fornecidas previamente, e eu implementei as funcionalidades descritas acima e realizei algumas melhorias no que foi fornecido previamente.
+![fotosistema1](https://github.com/user-attachments/assets/ce69dfa1-76e1-4b5e-ac11-cf4cd5a3be1e)
+![fotosistema2](https://github.com/user-attachments/assets/6f29f4c2-3372-49fc-89b2-2ef875f8f7ee)
+![fotosistema3](https://github.com/user-attachments/assets/3e7a8bfe-53fe-4340-8904-c469aa66e0a1)
+![fotosistema4](https://github.com/user-attachments/assets/f3b1a598-7a25-4459-81e1-64e20914fc69)
+![fotosistema5](https://github.com/user-attachments/assets/94e59c8d-bb39-4c95-98d9-f13835cad00b)
+![fotosistema6](https://github.com/user-attachments/assets/52e10656-264e-4ac9-a873-2a57d4e11899)
